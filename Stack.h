@@ -9,9 +9,10 @@ class Stack {
         Stack();
         //Stack( Stack & );
         ~Stack();
+        //void ingestData();
         void push(SElement, int, double);
         void pop(SElement &, int &, double &);
-        //void peek( SElement & );
+        //int getSize();
         void view();
     private:    
         struct StackNode 

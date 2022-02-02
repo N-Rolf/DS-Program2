@@ -107,7 +107,7 @@ void Stack::push(SElement title, int quantity, double cost)
 *** IN/OUT ARGS : none                                            ***
 *** RETURN : none                                                 ***
 ********************************************************************/
-void Stack::pop(SElement & catchTitle, int & catchCost, double & catchQuantity)
+void Stack::pop(SElement & catchTitle, int & catchQuantity, double & catchCost )
 {
     struct StackNode* temp;
 
@@ -167,3 +167,4 @@ void Stack::view()
     }
     cout << "BOTTOM" << endl;
 }
+
