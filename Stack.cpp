@@ -9,8 +9,6 @@
 ********************************************************************/
 #include "Stack.h"
 #include <iostream>
-#include <cstdlib>
-#include <cstring>
 #include <string>
 using namespace std;
 
@@ -18,7 +16,7 @@ using namespace std;
 /********************************************************************
 *** FUNCTION Stack                                           ***
 *********************************************************************
-*** DESCRIPTION : the default constructor for Stack class    ***
+*** DESCRIPTION : the default constructor for Stack class         ***
 *** INPUT ARGS : none                                             ***
 *** OUTPUT ARGS : none                                            ***
 *** IN/OUT ARGS : none                                            ***
@@ -32,8 +30,8 @@ Stack::Stack ()
 /********************************************************************
 *** FUNCTION Stack (const Stack & old)                  ***
 *********************************************************************
-*** DESCRIPTION : the copy constructor for Stack class       ***
-*** INPUT ARGS : pointer to a Stack object                   ***
+*** DESCRIPTION : a copy constructor for Stack class              ***
+*** INPUT ARGS : pointer to a Stack object                        ***
 *** OUTPUT ARGS : none                                            ***
 *** IN/OUT ARGS : none                                            ***
 *** RETURN : none                                                 ***
@@ -134,7 +132,7 @@ void Stack::pop(SElement & catchTitle, int & catchQuantity, double & catchCost )
 ********************************************************************/
 // void Stack::peek(double & catchElem)
 // {
-//     struct StackNode* temp;
+//     struct SNode* temp;
 
 //     catchElem = top->element;
 //     temp = top;
@@ -168,4 +166,3 @@ void Stack::view()
     cout << "BOTTOM" << endl;
 }
 
-//current 9:40 2.1.22

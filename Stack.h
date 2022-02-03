@@ -9,10 +9,8 @@ class Stack {
         Stack();
         //Stack( Stack & );
         ~Stack();
-        //void ingestData();
         void push(SElement, int, double);
         void pop(SElement &, int &, double &);
-        //int getSize();
         void view();
     private:    
         struct StackNode 
@@ -26,4 +24,3 @@ class Stack {
 };
 #endif
 
-//current 9:40 2.1.22
