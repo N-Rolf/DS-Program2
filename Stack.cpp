@@ -1,20 +1,20 @@
 /********************************************************************
-***  NAME       :Neil Rolf       ***
-***  CLASS      :CSc 300         ***
-***  ASSIGNMENT :Assignment 3    ***
-***  DUE DATE   :10/04/2021      ***
-***  INSTRUCTOR :  GAMRADT       ***
+***  NAME       :Neil Rolf                                        ***
+***  CLASS      :CSc 300                                          ***
+***  ASSIGNMENT :Program 2                                        ***
+***  DUE DATE   :02/04/2022                                       ***
+***  INSTRUCTOR :Kurtenbach                                       ***
 *********************************************************************
-***  DESCRIPTION :Stack ADT implemented with linked list   ***
+***  DESCRIPTION :Stack ADT implemented with linked list giving   ***
+***               user access to grocery item purchase history.   ***
 ********************************************************************/
 #include "Stack.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
-
 /********************************************************************
-*** FUNCTION Stack                                           ***
+*** FUNCTION Stack                                                ***
 *********************************************************************
 *** DESCRIPTION : the default constructor for Stack class         ***
 *** INPUT ARGS : none                                             ***
@@ -22,47 +22,24 @@ using namespace std;
 *** IN/OUT ARGS : none                                            ***
 *** RETURN : none                                                 ***
 ********************************************************************/
-Stack::Stack ()
+GroceryStack::GroceryStack ()
 {
     top = nullptr;
 }
 
 /********************************************************************
-*** FUNCTION Stack (const Stack & old)                  ***
+*** FUNCTION ~Stack                                               ***
 *********************************************************************
-*** DESCRIPTION : a copy constructor for Stack class              ***
-*** INPUT ARGS : pointer to a Stack object                        ***
-*** OUTPUT ARGS : none                                            ***
-*** IN/OUT ARGS : none                                            ***
-*** RETURN : none                                                 ***
-********************************************************************/
-// Stack::Stack (Stack & old)
-// {
-//     StackNode * oldNodePtr;
-//     top = nullptr;
-
-//     oldNodePtr = old.top;
-//     while (oldNodePtr != nullptr)
-//     {
-//         push(oldNodePtr->element);
-//         oldNodePtr = oldNodePtr->next;
-//     }
-//     return;
-// }
-
-/********************************************************************
-*** FUNCTION ~Stack                                          ***
-*********************************************************************
-*** DESCRIPTION : the destructor for Stack class             ***
+*** DESCRIPTION : the destructor for Stack class                  ***
 *** INPUT ARGS : none                                             ***
 *** OUTPUT ARGS : none                                            ***
 *** IN/OUT ARGS : none                                            ***
 *** RETURN : none                                                 ***
 ********************************************************************/
-Stack::~Stack()
+GroceryStack::~GroceryStack()
 {
     StackNode * np;
-    cout << "\ndestroying the list\n";
+    //cout << "\ndestroying the list\n";
 
     np = top;
     while (np != nullptr)
@@ -79,12 +56,12 @@ Stack::~Stack()
 *** FUNCTION push                                                 ***
 *********************************************************************
 *** DESCRIPTION : inserts a list node at top of the stack         ***
-*** INPUT ARGS : element                                          ***
+*** INPUT ARGS : elements                                         ***
 *** OUTPUT ARGS : none                                            ***
 *** IN/OUT ARGS : none                                            ***
 *** RETURN : none                                                 ***
 ********************************************************************/
-void Stack::push(SElement title, int quantity, double cost)
+void GroceryStack::push(SElement title, int quantity, double cost)
 {
     struct StackNode* temp;
     temp = new StackNode();
@@ -100,12 +77,12 @@ void Stack::push(SElement title, int quantity, double cost)
 *** FUNCTION pop                                                  ***
 *********************************************************************
 *** DESCRIPTION : deletes a list node at top of the stack         ***
-*** INPUT ARGS : element                                          ***
+*** INPUT ARGS : elements                                         ***
 *** OUTPUT ARGS : none                                            ***
 *** IN/OUT ARGS : none                                            ***
 *** RETURN : none                                                 ***
 ********************************************************************/
-void Stack::pop(SElement & catchTitle, int & catchQuantity, double & catchCost )
+void GroceryStack::pop(SElement & catchTitle, int & catchQuantity, double & catchCost )
 {
     struct StackNode* temp;
 
@@ -122,26 +99,6 @@ void Stack::pop(SElement & catchTitle, int & catchQuantity, double & catchCost )
 }
 
 /********************************************************************
-*** FUNCTION peek                                                 ***
-*********************************************************************
-*** DESCRIPTION : displays the list node at top of the stack      ***
-*** INPUT ARGS : element                                          ***
-*** OUTPUT ARGS : none                                            ***
-*** IN/OUT ARGS : none                                            ***
-*** RETURN : none                                                 ***
-********************************************************************/
-// void Stack::peek(double & catchElem)
-// {
-//     struct SNode* temp;
-
-//     catchElem = top->element;
-//     temp = top;
-//     cout << temp->element << endl;
-   
-//     return;
-// }
-
-/********************************************************************
 *** FUNCTION view                                                 ***
 *********************************************************************
 *** DESCRIPTION : displays all nodes in the stack                 ***
@@ -150,7 +107,7 @@ void Stack::pop(SElement & catchTitle, int & catchQuantity, double & catchCost )
 *** IN/OUT ARGS : none                                            ***
 *** RETURN : none                                                 ***
 ********************************************************************/
-void Stack::view()
+void GroceryStack::view()
 {
     struct StackNode* temp;
 
@@ -165,4 +122,3 @@ void Stack::view()
     }
     cout << "BOTTOM" << endl;
 }
-

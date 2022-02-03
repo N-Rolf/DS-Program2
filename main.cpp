@@ -1,3 +1,13 @@
+/********************************************************************
+***  NAME       :Neil Rolf                                        ***
+***  CLASS      :CSc 300                                          ***
+***  ASSIGNMENT :Program 2                                        ***
+***  DUE DATE   :02/04/2022                                       ***
+***  INSTRUCTOR :Kurtenbach                                       ***
+*********************************************************************
+***  DESCRIPTION :Stack ADT implemented with linked list giving   ***
+***               user access to grocery item purchase history.   ***
+********************************************************************/
 #include "Stack.h"
 #include <iostream>
 #include <fstream>
@@ -5,9 +15,7 @@
 #include <string>
 using namespace std;
 
-int ingestData();
-void printPrevious(int);
-void printTotal(int);
+enum Menu {PRINT_PREV=1, PRINT_TOTAL, EXIT};
 
 struct Node
     {
@@ -16,14 +24,18 @@ struct Node
         double cost;
     };
 
+int ingestData();
+void printPrevious(int);
+void printTotal(int);
+
 double total = 0;
 bool inToggle = 0;
 string userFile;
-Stack GroceryList;
+GroceryStack GroceryList;
 
 int main()
 {
-    //data ingest and user file name prompt
+    //initial data ingest and user file name prompt
     int itemsCount = ingestData();
     
     //USER MENU
@@ -36,40 +48,51 @@ int main()
         cin.clear();
         cin >> selection;
         switch(selection){
-            case 1:{
+            case PRINT_PREV:{
                 printPrevious(itemsCount);
                 break;
                 }
-            case 2:{
+            case PRINT_TOTAL:{
                 total = 0;
                 printTotal(itemsCount);
-                cout << "Total cost of items purchased: $" << total << endl;
+                cout << "\n\nTotal cost of items purchased: $";
+                cout << setprecision(2) << std::fixed << total << "\n\n";
                 ingestData();
                 break;
                 }
-            case 3:{
+            case EXIT:{
                 cout << "\nExiting...\n";
                 break;
                 }
         }
     }while(selection != 3);
 
-    cout << "Displaying all elements..." << endl;
-    GroceryList.view();
+    //debug
+    // cout << "Displaying all elements..." << endl;
+    // GroceryList.view();
 
     return 0;
 }
 
+/********************************************************************
+*** FUNCTION ingestData                                           ***
+*********************************************************************
+*** DESCRIPTION : displays all nodes in the stack                 ***
+*** INPUT ARGS : none                                             ***
+*** OUTPUT ARGS : none                                            ***
+*** RETURN : number of items pushed to stack                      ***
+********************************************************************/
 int ingestData()
 {
     //get file name from user
-    cout << "enter file name: \"file.dat\"" << endl;
     if(inToggle == 0)
     {
+        cout << "enter file name: \"file.dat\"" << endl;
         cin >> userFile;
         inToggle = 1;
     }
     
+    //check for file
     ifstream infile;
     infile.open(userFile);
         if(!infile)
@@ -78,17 +101,13 @@ int ingestData()
             exit(102);
         }
     
+    //read from file to temporary node, push from temp to stack
     Node tempNode;
     int count = 0;
 
     while(!infile.eof())
     {
         infile >> tempNode.title >> tempNode.quantity >> tempNode.cost;
-        // cout << "Title: " << tempNode.title << endl;
-        // cout << "Quantity: " << tempNode.quantity << endl;
-        // cout << "Cost: " << tempNode.cost << endl;
-        // cout << "Count: " << count << endl;
-        // cout << "\nPushing...\n";
         GroceryList.push(tempNode.title, tempNode.quantity, tempNode.cost);     
         count ++;
         infile.ignore();
@@ -99,28 +118,42 @@ int ingestData()
     return count;
 }
 
+/********************************************************************
+*** FUNCTION printPrevious                                        ***
+*********************************************************************
+*** DESCRIPTION : displays user defined number of entries from    ***
+***               top of stack                                    ***
+*** INPUT ARGS : number of elements in stack                      ***
+*** OUTPUT ARGS : none                                            ***
+*** RETURN : none                                                 ***
+********************************************************************/
 void printPrevious(int num)
 {
-    string catchItem;
-    int catchQty;
-    double catchPrice;
     int selection = 0;
     int i=0;
-    cout << "The file contains " << num << "items." << endl;
+    //user prompt for number of items
+    cout << "The file contains " << num << " items." << endl;
     cout << "How many items would you like to view? (enter a whole number)" << endl;
     cin >> selection;
-    if(selection > num)
+    if(selection > num)     //prevent reading beyond stack size
         selection = num;
 
     Node tempNode[selection];
 
-    //read selection from stack
+    cout << "\nHere are the " << selection << " most recently purchased items.";
+    cout << "\n____________________________________________________________\n\n";
+    cout << setw(12) << std::left << "Item:" << setw(12) << "Quantity:" << setw(12) << "Cost:" << endl;
+
+    //read selection from stack to array of temp structures for display
     for(i=0; i<selection; i++)
     {
-        cout << "Popping..." << endl;
         GroceryList.pop(tempNode[i].title, tempNode[i].quantity, tempNode[i].cost);
-        cout << "Popped items: " << tempNode[i].title << ", " << tempNode[i].quantity << ", " << tempNode[i].cost << endl;
+        cout << setw(12) << std::left << tempNode[i].title;
+        cout << setw(12) << std::left << tempNode[i].quantity;
+        cout << setw(12) << std::left << tempNode[i].cost << endl;
     }
+
+    cout << "\n____________________________________________________________\n";
 
     //rebuild stack
     for(i=selection-1; i>-1; i--)
@@ -130,15 +163,22 @@ void printPrevious(int num)
     return;
 }
 
+/********************************************************************
+*** FUNCTION printTotal                                           ***
+*********************************************************************
+*** DESCRIPTION : calculates total value of items purchased       ***
+***               in stack                                        ***
+*** INPUT ARGS : number of elements in stack                      ***
+*** OUTPUT ARGS : none                                            ***
+*** RETURN : none                                                 ***
+********************************************************************/
 void printTotal(int num)
 {
+    //recursively reads elements from stack to temporary structure and sums total
     Node tempNode;
     if(num > 0)
         {
             GroceryList.pop(tempNode.title, tempNode.quantity, tempNode.cost);
-            // cout << "Title: " << tempNode.title << endl;
-            // cout << "Quantity: " << tempNode.quantity << endl;
-            // cout << "Cost: " << tempNode.cost << endl;
             total += (tempNode.cost*tempNode.quantity);
             --num;
             printTotal(num);
