@@ -10,6 +10,7 @@
 ********************************************************************/
 #include "Stack.h"
 #include <iostream>
+#include <iomanip>
 #include <string>
 using namespace std;
 
@@ -99,6 +100,35 @@ void GroceryStack::pop(SElement & catchTitle, int & catchQuantity, double & catc
 }
 
 /********************************************************************
+*** FUNCTION peek                                                 ***
+*********************************************************************
+*** DESCRIPTION : displays user defined nodes in the stack        ***
+*** INPUT ARGS : none                                             ***
+*** OUTPUT ARGS : none                                            ***
+*** IN/OUT ARGS : none                                            ***
+*** RETURN : none                                                 ***
+********************************************************************/
+void GroceryStack::peek() const
+{
+    struct StackNode* temp;
+    //cout << "you selected: " << userSelection << endl;
+    temp = top;
+
+    cout << "\nHere are the " << userSelection << " most recently purchased items.";
+    cout << "\n____________________________________________________________\n\n";
+    cout << setw(12) << std::left << "Item:" << setw(12) << "Quantity:" << setw(12) << "Cost:" << endl;
+
+    for (int i=0; i<userSelection; i++)
+    {
+        cout << setw(12) << std::left << temp->title;
+        cout << setw(12) << std::left << temp->quantity;
+        cout << setw(12) << std::left << temp->cost << endl;
+        temp = temp->next;
+    }
+    cout << "\n____________________________________________________________\n";
+}
+
+/********************************************************************
 *** FUNCTION view                                                 ***
 *********************************************************************
 *** DESCRIPTION : displays all nodes in the stack                 ***
@@ -121,4 +151,21 @@ void GroceryStack::view()
         temp = temp->next;
     }
     cout << "BOTTOM" << endl;
+}
+
+/********************************************************************
+*** FUNCTION printTotal                                           ***
+*********************************************************************
+*** DESCRIPTION : calculates total value of items purchased       ***
+***               in stack recursively                            ***
+*** INPUT ARGS : pointer to stack structure                       ***
+*** OUTPUT ARGS : double value of cost total                      ***
+*** RETURN : none                                                 ***
+********************************************************************/
+double GroceryStack::totalValue(StackNode *nodePtr) const
+{
+    if(nodePtr == nullptr)
+        return 0;
+    else
+        return (nodePtr->quantity*nodePtr->cost + totalValue(nodePtr->next));
 }

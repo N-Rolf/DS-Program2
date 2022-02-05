@@ -18,9 +18,14 @@ class GroceryStack {
     public:
         GroceryStack();
         ~GroceryStack();
+        void setSelection(int val)
+            { userSelection = val; }
         void push(SElement, int, double);
         void pop(SElement &, int &, double &);
+        void peek() const;
         void view();
+        double total() const
+            { return totalValue(top); }
     private:    
         struct StackNode 
         {
@@ -30,5 +35,7 @@ class GroceryStack {
             StackNode *next;
         };
         StackNode *top;
+        double totalValue(StackNode *) const;
+        int userSelection;
 };
 #endif
